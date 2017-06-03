@@ -1,20 +1,20 @@
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
-int main()
-{
-	char str[2];
-	str[1] = '\0';
-	str[0] = (i - 1) + 48;
-	char *c = "#include <stdio.h>%1$c#include <stdlib.h>%1$cint main()%1$c{%1$c%2$cchar *c = %3$c%5$s%3$c;%1$c%2$cchar *d = %3$c%4$s%3$c;%1$c%2$cint i = 5;%1$c%2$cif (i == 5)%1$c%2$c%2$cFILE *fp = fopen(%3$cSully_5.c%3$c, %3$cw%3$c);%1$c%2$cfprintf(fp,c,10,9,34,c);%1$c%2$cfclose(fp)%1$c%2$cfp = fopen(strcat(strcat(%3$cSully_%3$c, str), %3$c.c%3$c), %3$cw%3$c);%1$c%2$cfprintf(fp,d,10,9,34,str[0],d);%1$c%2$cfclose(fp);%1$c%2$csystem(strcat(strcat(strcat(strcat(%3$cgcc -Wall -Wextra -Werror -o Sully_%3$c, str[0]), %3$c Sully_%3$c), str[0]), %3$c.c%3$c));%1$c%2$csystem(strcat(%3$c./Sully_%3$c, str[0]));%1$c}";
-	char *d = "#include <stdio.h>%1$c#include <stdlib.h>%1$cint main()%1$c{%1$c%2$cchar *c = %3$c%5$s%3$c;%1$c%2$cchar *d = %3$c%6$s%3$c;%1$c%2$cint i = %4$c;%1$c%2$cif (i == 5)%1$c%2$c%2$cFILE *fp = fopen(%3$cSully_5.c%3$c, %3$cw%3$c);%1$c%2$cfprintf(fp,c,10,9,34,c);%1$c%2$cfclose(fp)%1$c%2$cfp = fopen(strcat(strcat(%3$cSully_%3$c, str), %3$c.c%3$c), %3$cw%3$c);%1$c%2$cfprintf(fp,d,10,9,34,str[0],d);%1$c%2$cfclose(fp);%1$c%2$csystem(strcat(strcat(strcat(strcat(%3$cgcc -Wall -Wextra -Werror -o Sully_%3$c, str[0]), %3$c Sully_%3$c), str[0]), %3$c.c%3$c));%1$c%2$csystem(strcat(%3$c./Sully_%3$c, str[0]));%1$c}";
+int main(){
 	int i = 5;
-	if (i == 5)
-		FILE *fp = fopen("Sully_5.c", "w");
-	fprintf(fp,c,10,9,34,d,c);
-	fclose(fp);
-	fp = fopen(strcat(strcat("Sully_", str), ".c"), "w");
-	fprintf(fp,d,10,9,34,str[0],c,d);
-	fclose(fp);
-	system(strcat(strcat(strcat(strcat("gcc -Wall -Wextra -Werror -o Sully_", str[0]), " Sully_"), str[0]), ".c"));
-	system(strcat("./Sully_", str[0]));
+	if (i <= 0)
+		return(0);
+	char buf[200];
+	sprintf(buf, "Sully_%d.c", i);
+	FILE *f = fopen(buf, "w");
+	i--;
+	char*c="#include <stdio.h>%1$c#include <string.h>%1$c#include <stdlib.h>%1$cint main(){%1$c%5$cint i = %4$d;%1$c%5$cif (i <= 0)%1$c%5$c%5$creturn(0);%1$c%5$cchar buf[200];%1$c%5$csprintf(buf, %2$cSully_%%d.c%2$c, i);%1$c%5$cFILE *f = fopen(buf, %2$cw%2$c);%1$c%5$ci--;%1$c%5$cchar*c=%2$c%3$s%2$c;%1$c%5$cfprintf(f, c, 10, 34, c, i, 9);%1$c%5$cfclose(f);%1$c%5$cchar buf2[200];%1$c%5$csprintf(buf2, %2$cclang -Wall -Wextra -Werror -o %%.*s %%s%2$c, (int)strlen(buf)-2, buf, buf);%1$c%5$csystem(buf2);%1$c%5$csprintf(buf2, %2$c./%%.*s%2$c, (int)strlen(buf)-2, buf);%1$c%5$csystem(buf2);%1$c}%1$c";
+	fprintf(f, c, 10, 34, c, i, 9);
+	fclose(f);
+	char buf2[200];
+	sprintf(buf2, "clang -Wall -Wextra -Werror -o %.*s %s", (int)strlen(buf)-2, buf, buf);
+	system(buf2);
+	sprintf(buf2, "./%.*s", (int)strlen(buf)-2, buf);
+	system(buf2);
 }
